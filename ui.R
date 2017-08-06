@@ -22,7 +22,8 @@ shinyUI(fluidPage(
              to a circle of radius r rolling around the outside of a fixed circle of radius R, where 
              the point is at a distance d (varied during animation) from the center of the exterior circle.
              The classic Spirograph toy traces out epitrochoid and hypotrochoid curves.
-             Please do not chose equal values for fixed and moving radiuses, it will result in no drawing."
+             Enter values for fixed and moving radiuses, and press play button in \"Number of cycles\"
+             panel. Pleae do not enter equal values for fixed and moving radiuses, it will result in no drawing."
       )
       ),
   
