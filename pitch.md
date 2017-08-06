@@ -1,37 +1,57 @@
-pitch
+Coursera 9 programm assignment pitch
 ========================================================
 author: David Vachadze
 date: Aug 06, 2017
 autosize: true
 
-First Slide
+Epitrochoids animation app
 ========================================================
 
-For more details on authoring R presentations please visit <https://support.rstudio.com/hc/en-us/articles/200486468>.
+https://vachadze.shinyapps.io/coursera9/
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
+- This app draws various types of epitrochoids in animated fashion. 
+- An epitrochoid is a roulette traced by a point attached
+             to a circle of radius r rolling around the outside of a fixed circle of radius R, where 
+             the point is at a distance d (varied during animation) from the center of the exterior circle.
+- The classic Spirograph toy traces out epitrochoid and hypotrochoid curves.
 
-Slide With Code
+
+Epitrochoid example
+========================================================
+
+![plot of chunk unnamed-chunk-1](pitch-figure/unnamed-chunk-1-1.png)
+
+
+Epitrochoid example code
 ========================================================
 
 
 ```r
-summary(cars)
+library(cycloids)
+library(dplyr)
+library(magrittr)
+
+n <- 20; A <- 7; B <- 5
+lambdax <- seq(0.85, by = -0.05, length.out = n)
+z <- zykloid(A, B, lambdax[1])
+z.data <- bind_cols(z, data.frame(cycle = rep(1, nrow(z))))
+      
+ for (i in c(2:n)) { 
+          z <- zykloid(A, B, lambdax[i])
+          z.data %<>% bind_rows(bind_cols(z, data.frame(cycle = rep(i, nrow(z)))))
+ }
+
+op <- par(mar = c(0,0,0,0), bg = "black") # no plot margins
+ccol <- rep(c("steelblue", "steelblue", "red", "red"), ceiling(n/4))
+par(ask=F)
+plot.new(); xmax <- max(z.data$x)*1.1; ymax <- max(z.data$y)*1.1 
+plot.window(asp = 1, xlim = c(-xmax, xmax), ylim = c(-ymax, ymax))
+for (i in c(1:n)) lines(y ~ x, data = filter(z.data, cycle == i), type = "l", col = ccol[i])  
 ```
 
-```
-     speed           dist       
- Min.   : 4.0   Min.   :  2.00  
- 1st Qu.:12.0   1st Qu.: 26.00  
- Median :15.0   Median : 36.00  
- Mean   :15.4   Mean   : 42.98  
- 3rd Qu.:19.0   3rd Qu.: 56.00  
- Max.   :25.0   Max.   :120.00  
-```
-
-Slide With Plot
+Epitrochoid app code
 ========================================================
+- This app uses cycloids package for calculating coordinate representations of hypocycloids, epicyloids, hypotrochoids, and epitrochoids with different scaling and positioning options. 
+- app created with Shiny and hosted on shinyapps.io at https://vachadze.shinyapps.io/coursera9/
+- app is simple with strightforward use, so documentation is a parapgraph of text one the app page itselft
 
-![plot of chunk unnamed-chunk-2](pitch-figure/unnamed-chunk-2-1.png)
